@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>mrv-lib | Model validation library for financial AI</title>
+<meta name="description" content="Open-source model validation library. Test whether an AI model's outputs survive an equivalent change of inputs, then trip a fail-safe gate before an unstable output reaches a live risk decision.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg-alt:#f6f8fb; --card:#ffffff;
+  --ink:#0b1220; --ink-2:#3f4d63; --muted:#7a889c;
+  --navy:#0a1020; --navy-2:#111a30; --navy-line:#243350;
+  --blue:#3b82f6; --indigo:#5b5bf0; --grad:linear-gradient(135deg,#3b82f6,#5b5bf0);
+  --green:#10b981; --amber:#f59e0b; --red:#ef4444; --bluebadge:#3b82f6;
+  --border:#e7ebf1; --border-2:#eef1f6; --radius:12px; --radius-lg:16px;
+  --shadow-sm:0 1px 2px rgba(12,20,40,.05);
+  --shadow:0 1px 2px rgba(12,20,40,.04),0 8px 24px rgba(12,20,40,.06);
+  --shadow-lg:0 2px 4px rgba(12,20,40,.05),0 18px 40px rgba(12,20,40,.09);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{line-height:1.14;letter-spacing:-.022em;font-weight:700;color:var(--ink);margin:0}
+h1{font-size:clamp(2.15rem,4.4vw,3.35rem);font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(1.65rem,3vw,2.2rem);letter-spacing:-.025em}
+h3{font-size:1.12rem}
+p{margin:0}
+a{color:var(--blue);text-decoration:none;transition:color .15s var(--ease)}
+a:hover{text-decoration:underline}
+code,pre,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.section{padding:96px 0;border-top:1px solid var(--border)}
+.section.alt{background:var(--bg-alt)}
+.section-head{max-width:64ch}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.lead{font-size:1.1rem;line-height:1.6;color:var(--ink-2);max-width:64ch;margin-top:16px}
+.head-h{margin-top:12px}
+.note{font-size:.86rem;color:var(--muted);margin-top:22px;line-height:1.55}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.78);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:1120px;margin:0 auto;padding:0 24px}
+.brand{font-weight:800;font-size:1.12rem;color:var(--ink);letter-spacing:-.02em}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:6px;align-items:center;list-style:none;margin:0;padding:0}
+.nav-links a{color:var(--ink-2);font-size:.9rem;font-weight:500;padding:7px 12px;border-radius:8px;transition:color .15s var(--ease),background .15s var(--ease)}
+.nav-links a:hover{color:var(--ink);text-decoration:none;background:var(--bg-alt)}
+.nav-tog{display:none;background:none;border:0;color:var(--ink);cursor:pointer;padding:6px;border-radius:8px}
+.nav-tog:hover{background:var(--bg-alt)}
+@media(max-width:820px){
+  .nav-links{position:absolute;top:62px;left:0;right:0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--border);display:none;padding:8px 0;box-shadow:var(--shadow)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 24px;width:100%;border-radius:0}
+  .nav-links a:hover{background:var(--bg-alt)}
+  .nav-tog{display:block}
+}
+
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(91,91,240,.25),transparent),radial-gradient(900px 500px at 0% 0%,rgba(59,130,246,.18),transparent),var(--navy);color:#eaf0fb;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(70% 60% at 50% 20%,#000,transparent);-webkit-mask-image:radial-gradient(70% 60% at 50% 20%,#000,transparent)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(180deg,transparent,rgba(10,16,32,0));pointer-events:none}
+.hero-in{position:relative;padding:46px 0 84px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:60px;align-items:center}
+.hero-col{max-width:600px;text-align:left}
+.hero h1{color:#fff;margin-top:16px}
+.hero .accent{background:linear-gradient(120deg,#7ea8ff,#a9a3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-eyebrow{display:inline-block;color:#9fb3d8;font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:5px 11px;border:1px solid var(--navy-line);border-radius:999px;background:rgba(255,255,255,.02)}
+.hero-sub{font-size:1.13rem;line-height:1.6;color:#c4d0e6;margin:20px 0 0;max-width:52ch}
+.hero-copy{font-size:.95rem;color:#93a3c2;margin-top:14px;max-width:52ch}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+.badges a{display:block;line-height:0;border-radius:5px;transition:transform .15s var(--ease),opacity .15s var(--ease)}
+.badges a:hover{transform:translateY(-1px);opacity:.9}
+.badges img{height:20px;display:block}
+.cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:flex-start;margin-top:30px}
+.chip{display:inline-flex;align-items:center;background:#0e1830;border:1px solid var(--navy-line);border-radius:10px;padding:11px 15px;font-family:var(--mono);font-size:.88rem;color:#cdd8ee;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.chip b{color:#5f7096;font-weight:400;margin-right:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:11px 18px;font-weight:600;font-size:.92rem;cursor:pointer;border:1px solid transparent;transition:transform .15s var(--ease),filter .15s var(--ease),border-color .15s var(--ease),background .15s var(--ease),box-shadow .15s var(--ease)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(59,130,246,.28)}
+.btn-primary:hover{text-decoration:none;filter:brightness(1.07);transform:translateY(-1px);box-shadow:0 10px 24px rgba(59,130,246,.36)}
+.btn-ghost{background:rgba(255,255,255,.02);border-color:#33436a;color:#dbe4f5}
+.btn-ghost:hover{text-decoration:none;border-color:#5a6f9e;background:rgba(255,255,255,.05)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-line{background:#fff;border-color:var(--border);color:var(--ink)}
+.btn-line:hover,.btn-dark:hover{text-decoration:none}
+
+/* hero verdict panel */
+.panel{background:#0c142a;border:1px solid var(--navy-line);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden;font-family:var(--mono)}
+.panel-top{display:flex;align-items:center;gap:7px;padding:11px 15px;border-bottom:1px solid var(--navy-line);color:#7488ad;font-size:.72rem;letter-spacing:.1em}
+.dot3{width:10px;height:10px;border-radius:50%}
+.panel-body{padding:18px}
+.spec-lab{color:#9fb3d8;font-size:.74rem;letter-spacing:.02em;margin-bottom:7px}
+.spec-lab b{color:#e7eefc;font-weight:600}
+.strip{display:flex;gap:3px;height:22px;margin-bottom:16px}
+.strip i{flex:1;border-radius:3px;display:block}
+.s-g{background:var(--green)} .s-a{background:var(--amber)} .s-r{background:var(--red)}
+.seam{height:1px;background:linear-gradient(90deg,transparent,#5b5bf0,transparent);margin:2px 0 16px}
+.vrow{display:flex;justify-content:space-between;font-size:.82rem;color:#c4d0e6;padding:3px 0}
+.vrow .fail{color:#ff7a7a;font-weight:600}
+.gate{margin-top:14px;text-align:center;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:#ff9a9a;border-radius:8px;padding:10px;font-weight:600;letter-spacing:.12em;font-size:.82rem}
+.panel-foot{padding:9px 15px;border-top:1px solid var(--navy-line);color:#5f7096;font-size:.68rem;font-family:'Inter',sans-serif}
+
+/* three-answer strip */
+.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:-52px;position:relative;z-index:2;box-shadow:var(--shadow-lg)}
+.answers .a{background:#fff;padding:26px 24px;transition:background .18s var(--ease)}
+.answers .a:hover{background:#fbfcfe}
+.answers .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:600}
+.answers h3{margin:10px 0 6px;font-size:1.02rem}
+.answers p{font-size:.92rem;color:var(--ink-2);line-height:1.55}
+
+/* cards */
+.grid{display:grid;gap:20px;margin-top:38px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease)}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:#dbe1ea}
+.card h3{margin-bottom:6px}
+.card p{font-size:.92rem;color:var(--ink-2)}
+.card .eyebrow{font-size:.68rem}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid;white-space:nowrap}
+.p-green{color:#0a7a55;background:#e7f8f1;border-color:#b7ead6}
+.p-amber{color:#9a6100;background:#fef3e2;border-color:#f6d9a8}
+.p-red{color:#b42323;background:#fdeaea;border-color:#f5c2c2}
+.p-blue{color:#2456c9;background:#e8f0ff;border-color:#c2d6fb}
+.p-grey{color:#5a6579;background:#eef1f6;border-color:#dbe1ea}
+.pdot{width:7px;height:7px;border-radius:50%}
+
+/* callout */
+.callout{position:relative;border-radius:var(--radius);padding:18px 20px 18px 22px;font-size:.95rem;line-height:1.55;margin-top:26px}
+.c-info{background:#eef4ff;border:1px solid #d3e2fb;color:#22355c}
+.c-warn{background:#fff7ec;border:1px solid #fadfb4;color:#6b4d16}
+.callout::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:var(--radius) 0 0 var(--radius)}
+.c-info::before{background:var(--blue)}
+.c-warn::before{background:var(--amber)}
+.callout a{font-weight:600}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.step{background:var(--navy);color:#e7eefc;border-radius:var(--radius);padding:22px;border:1px solid var(--navy-line)}
+.step .n{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:#8ea6ff}
+.step h4{margin:8px 0 6px;color:#fff;font-size:1.02rem}
+.step p{font-size:.88rem;color:#a9b6d2}
+
+/* table */
+.tbl-wrap{margin-top:30px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+.tbl th{background:var(--bg-alt);text-align:left;padding:13px 16px;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+.tbl td{padding:13px 16px;border-top:1px solid var(--border-2);color:var(--ink-2);vertical-align:top}
+.tbl tbody tr{transition:background .15s var(--ease)}
+.tbl tbody tr:hover{background:#fafbfd}
+.tbl tbody tr:first-child td{border-top:0}
+.tbl td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+.tbl td.mono,.tbl th.mono{font-family:var(--mono)}
+.flag{font-size:1.15rem;margin-right:4px;vertical-align:-1px}
+
+/* code */
+pre.code{background:var(--navy);color:#e6edfb;border:1px solid var(--navy-line);border-radius:var(--radius);padding:20px;overflow-x:auto;font-size:.84rem;line-height:1.7;margin:0;box-shadow:var(--shadow-sm)}
+pre.code .k{color:#7f96c9}
+pre.code .fail{color:#ff8080;font-weight:600}
+.codehead{display:flex;align-items:center;gap:8px;background:#0e1830;color:#8ea6c9;border:1px solid var(--navy-line);border-bottom:0;border-radius:var(--radius) var(--radius) 0 0;padding:10px 16px;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;box-shadow:var(--shadow-sm)}
+.codehead::before{content:"";width:8px;height:8px;border-radius:50%;background:#33436a;box-shadow:12px 0 0 #33436a,24px 0 0 #33436a;margin-right:10px;flex:0 0 auto}
+.codehead+pre.code{border-radius:0 0 var(--radius) var(--radius);box-shadow:none}
+
+/* citation */
+.cite{background:#fff;border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.cite:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.cite .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}
+.cite .ref{font-family:var(--mono);font-size:.72rem;color:var(--blue);font-weight:600;letter-spacing:.02em}
+.cite h3{font-size:1.06rem}
+.cite .meta{font-size:.86rem;color:var(--muted);margin-top:8px;line-height:1.55}
+.cite .find{font-size:.92rem;color:var(--ink-2);margin-top:12px;line-height:1.55}
+
+/* roadmap */
+.rm{display:grid;gap:14px;margin-top:36px}
+.rm-row{display:flex;gap:20px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease)}
+.rm-row:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:#dbe1ea}
+.rm-v{flex-shrink:0;width:54px;height:24px;display:flex;align-items:center;justify-content:center;background:#eef1f6;color:#6b7688;border:1px solid var(--border);border-radius:999px;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.rm-row:first-child .rm-v{background:#e7f8f1;color:#0a7a55;border-color:#b7ead6}
+.rm-row h3{font-size:1.02rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rm-row p{font-size:.92rem;color:var(--ink-2);margin-top:6px;line-height:1.55}
+
+/* footer */
+footer{background:var(--navy);color:#93a3c2;padding:60px 0 36px;border-top:1px solid var(--navy-line)}
+footer .cols{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+footer .fb{font-weight:800;font-size:1.12rem;color:#fff;letter-spacing:-.02em}
+footer .fb span{color:#8ea6ff}
+footer h5{color:#c4d0e6;font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;margin:0 0 14px;font-weight:600}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+footer a{color:#93a3c2;font-size:.9rem;transition:color .15s var(--ease)}
+footer a:hover{color:#fff}
+footer .legal{border-top:1px solid var(--navy-line);margin-top:44px;padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:#61708f}
+
+/* ---- hero visual: representation-invariance panel ---- */
+.hero-visual{position:relative;display:flex;justify-content:center}
+.hero-visual .panel{width:100%;max-width:420px}
+.panel .fail{color:#ff7a7a;font-weight:600}
+
+@media(max-width:980px){
+  .hero-in{grid-template-columns:1fr;gap:44px;padding:64px 0 72px}
+  .hero-col{max-width:none}
+  .hero-visual{justify-content:flex-start}
+  .hero-visual .panel{max-width:460px}
+  .hero-sub{font-size:1.08rem}
+  .answers{grid-template-columns:1fr;margin-top:-40px}
+  .g3,.g2,.steps{grid-template-columns:1fr}
+  .section{padding:68px 0}
+  .grid{margin-top:30px}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .hero-in{padding:52px 0 60px;gap:36px}
+  .hero-sub{font-size:1.04rem}
+  .cta{gap:10px}
+  .cta .btn,.cta .chip{flex:1 1 auto;justify-content:center}
+  .answers{margin-top:-32px}
+  .answers .a{padding:22px 20px}
+  .card,.cite,.rm-row{padding:20px}
+  pre.code{font-size:.78rem;padding:16px}
+  .tbl th,.tbl td{padding:11px 12px}
+  .tbl td:first-child{white-space:normal}
+  .rm-row{flex-direction:column;gap:12px}
+  footer .cols{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#top" class="brand">mrv<span>-lib</span></a>
+    <button class="nav-tog" aria-label="Menu" onclick="document.getElementById('nl').classList.toggle('open')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="nl">
+      <li><a href="#top">Overview</a></li>
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#examples">Examples</a></li>
+      <li><a href="#docs">Docs</a></li>
+      <li><a href="#regulations">Regulations</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO / OVERVIEW -->
+<header class="hero" id="top">
+  <div class="wrap hero-in">
+    <div class="hero-col">
+      <div class="badges">
+        <a href="https://github.com/modelguard-lab/mrv-lib/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://img.shields.io/github/actions/workflow/status/modelguard-lab/mrv-lib/ci.yml?label=CI&labelColor=white" alt="CI"></a>
+        <a href="https://pypi.org/project/mrv-lib/" target="_blank" rel="noopener"><img src="https://img.shields.io/pypi/v/mrv-lib?label=PyPI&labelColor=white&color=3b82f6" alt="PyPI"></a>
+        <a href="https://github.com/modelguard-lab/mrv-lib/blob/main/LICENSE" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/License-AGPL--3.0-3b82f6?labelColor=white" alt="License"></a>
+        <a href="https://github.com/modelguard-lab/mrv-lib" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/GitHub-repo-24292e?logo=github&logoColor=24292e&labelColor=white" alt="GitHub"></a>
+      </div>
+      <div class="hero-eyebrow">Open-source model validation library</div>
+      <h1 class="head-h">AI Model Risk <span class="accent">Validator</span></h1>
+      <p class="hero-sub">mrv-lib runs specification-invariance validators that test whether a model's regime labels survive an equivalent change of inputs, then feed a fail-safe gate that holds back a failing model before it drives a live risk decision.</p>
+      <div class="cta">
+        <span class="chip"><b>$</b>pip install mrv-lib</span>
+        <a href="#examples" class="btn btn-primary">Quick start</a>
+        <a href="#methodology" class="btn btn-ghost">Read the methodology</a>
+      </div>
+    </div>
+
+    <aside class="hero-visual" aria-label="Illustrative representation-invariance check">
+      <div class="panel">
+        <div class="panel-top"><span class="dot3" style="background:#ef4444"></span><span class="dot3" style="background:#f59e0b"></span><span class="dot3" style="background:#10b981"></span><span style="margin-left:8px">mrv &middot; representation check</span></div>
+        <div class="panel-body">
+          <div class="spec-lab">SPEC A &nbsp; <b>[vol, max_drawdown, VaR, CVaR]</b></div>
+          <div class="strip"><i class="s-g"></i><i class="s-g"></i><i class="s-a"></i><i class="s-r"></i><i class="s-a"></i><i class="s-g"></i></div>
+          <div class="seam"></div>
+          <div class="spec-lab">SPEC B &nbsp; <b>[vol, realized_skew, VaR, CVaR]</b></div>
+          <div class="strip"><i class="s-g"></i><i class="s-a"></i><i class="s-r"></i><i class="s-r"></i><i class="s-a"></i><i class="s-g"></i></div>
+          <div class="vrow"><span>ARI</span><span>0.41 &nbsp; <span class="fail">FAIL</span></span></div>
+          <div class="vrow"><span>Spearman</span><span>0.79 &nbsp; <span class="fail">FAIL</span></span></div>
+          <div class="gate">NOT REPRESENTATION-INVARIANT</div>
+        </div>
+        <div class="panel-foot">Illustrative. Same data, two equivalent specs, regime labels disagree.</div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<!-- THREE ANSWERS -->
+<div class="wrap">
+  <div class="answers">
+    <div class="a"><div class="k">What it is</div><h3>A model validation library</h3><p>Runs specification-invariance validators that test whether a model's regime labels survive an equivalent change of inputs.</p></div>
+    <div class="a"><div class="k">How it works</div><h3>Refit, compare, gate</h3><p>Refit under equivalent inputs, measure agreement, and gate the model when it disagrees with itself.</p></div>
+    <div class="a"><div class="k">Why it is required</div><h3>Model risk regulation</h3><p>OCC 2026-13, Basel, and the EU AI Act require evidence a model is sound. This produces it.</p></div>
+  </div>
+</div>
+
+<!-- METHODOLOGY -->
+<section class="section" id="methodology">
+  <div class="wrap">
+    <div class="section-head">
+    <div class="eyebrow">Methodology</div>
+    <h2 class="head-h">Inference Collapse in AI Models</h2>
+    <p class="lead">Theory, Evaluation, and Fail-Safe Design for Financial Systems. Two published results, each shipped as a validator.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="cite">
+        <div class="top"><span class="ref">Paper 1 &middot; validate_rep</span><span class="pill p-green"><span class="pdot" style="background:var(--green)"></span>Published</span></div>
+        <h3 style="margin-top:10px">Regime labels are not representation-invariant</h3>
+        <p class="meta">Kai Zheng, Rand Low, Ruili Wang &middot; Finance Research Letters (2026) &middot; DOI <a href="https://doi.org/10.1016/j.frl.2026.110383" target="_blank" rel="noopener">10.1016/j.frl.2026.110383</a></p>
+        <p class="find">Swap economically equivalent risk features and the regime labels change: cross-representation ARI 0.34 to 0.43, below the 0.65 threshold.</p>
+      </div>
+      <div class="cite">
+        <div class="top"><span class="ref">Paper 2 &middot; validate_res</span><span class="pill p-blue"><span class="pdot" style="background:var(--bluebadge)"></span>Accepted</span></div>
+        <h3 style="margin-top:10px">Regime labels are not resolution-invariant</h3>
+        <p class="meta">Kai Zheng, Rand Low, Ruili Wang &middot; Finance Research Letters (accepted) &middot; SSRN <a href="https://dx.doi.org/10.2139/ssrn.6531002" target="_blank" rel="noopener">10.2139/ssrn.6531002</a></p>
+        <p class="find">Regime labels disagree across data frequencies (5m / 1h / 1d).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section class="section alt" id="examples">
+  <div class="wrap">
+    <div class="section-head">
+    <div class="eyebrow">Examples</div>
+    <h2 class="head-h">From install to a signed report in three commands.</h2>
+    <p class="lead">Run from the CLI, or drive the pipeline from Python. Both produce the same verdict and PDF.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <div class="codehead">CLI</div>
+        <pre class="code"><span class="k"># install</span>
+pip install mrv-lib
+
+<span class="k"># download data, then validate + report</span>
+mrv download config.yaml
+mrv run config.yaml rep      <span class="k"># representation</span>
+mrv run config.yaml res      <span class="k"># resolution</span>
+mrv report                   <span class="k"># regenerate PDF</span></pre>
+      </div>
+      <div>
+        <div class="codehead">Python</div>
+        <pre class="code"><span class="k">from</span> mrv.pipeline <span class="k">import</span> run, download, validate_rep, report
+<span class="k">from</span> mrv.utils.config <span class="k">import</span> load
+
+download("config.yaml")
+run("config.yaml", "rep")    <span class="k"># validate + PDF report</span>
+
+<span class="k"># or call a validator directly</span>
+cfg = load("config.yaml")
+verdict = validate_rep(labels=labels, cfg=cfg)
+report(verdict["json_path"], cfg=cfg)</pre>
+      </div>
+    </div>
+
+    <div class="callout c-info" style="margin-top:24px">Each run returns a plain dict (<code>verdict</code>, <code>ari</code>, <code>spearman</code>, <code>json_path</code>) and a PDF report. <a href="https://github.com/modelguard-lab/mrv-lib/blob/main/examples/quickstart.ipynb" target="_blank" rel="noopener">Interactive notebook (no market-data account needed)</a>.</div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section class="section" id="docs">
+  <div class="wrap">
+    <div class="section-head">
+    <div class="eyebrow">Docs</div>
+    <h2 class="head-h">Reference.</h2>
+    <p class="lead">Install, configure, and call the two published validators: representation and resolution invariance, from Papers 1 and 2.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <div class="codehead">config.yaml</div>
+        <pre class="code">download:
+  source: yfinance
+  symbols: [SPY]
+  frequencies: [5m, 1h, 1d]
+
+validator:
+  model: gmm            <span class="k"># gmm | hmm</span>
+  factor_sets:
+    - [vol, max_drawdown, VaR, CVaR]
+    - [vol, realized_skew, VaR, CVaR]
+
+thresholds:
+  ari: 0.65
+  spearman: 0.85</pre>
+      </div>
+      <div>
+        <div class="codehead">Python API</div>
+        <pre class="code">validate_rep(
+  labels,          <span class="k"># {factor_set: label_array}</span>
+  risk_proxy=None,
+  prices=None,
+  cfg=None,
+) -&gt; dict
+
+validate_res(
+  labels,          <span class="k"># {frequency: label_array}</span>
+  event_window=None,
+  calm_window=None,
+  cfg=None,
+) -&gt; dict
+<span class="k"># -> {verdict, ari, spearman, matrix_path, json_path}</span></pre>
+      </div>
+    </div>
+
+    <p class="note">Requires Python 3.9+. Two validators, one per published paper.</p>
+  </div>
+</section>
+
+<!-- REGULATIONS -->
+<section class="section alt" id="regulations">
+  <div class="wrap">
+    <div class="section-head">
+    <div class="eyebrow">Regulations</div>
+    <h2 class="head-h">The mandates that require model validation.</h2>
+    <p class="lead">Every major supervisor requires evidence that a model is sound under equivalent inputs. mrv-lib produces it. It supports these obligations; it does not certify compliance.</p>
+    </div>
+
+    <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Jurisdiction</th><th>Regulation</th><th>Requirement</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td><span class="flag">&#127482;&#127480;</span> US</td><td>OCC Bulletin 2026-13 (SR 26-2)</td><td>Model risk management; supersedes SR 11-7</td><td><a href="https://www.occ.gov/news-issuances/bulletins/" target="_blank" rel="noopener">occ.gov</a></td></tr>
+        <tr><td><span class="flag">&#127760;</span> Intl</td><td>Basel FRTB (BCBS d457)</td><td>Robustness of internal market-risk models</td><td><a href="https://www.bis.org/bcbs/publ/d457.htm" target="_blank" rel="noopener">bis.org</a></td></tr>
+        <tr><td><span class="flag">&#127466;&#127482;</span> EU</td><td>EU AI Act, Art 15</td><td>Accuracy and robustness of high-risk AI</td><td><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">eur-lex.europa.eu</a></td></tr>
+        <tr><td><span class="flag">&#127468;&#127463;</span> UK</td><td>PRA SS1/23</td><td>Model risk management principles for banks</td><td><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2023/may/model-risk-management-principles-for-banks-ss1-23" target="_blank" rel="noopener">bankofengland.co.uk</a></td></tr>
+        <tr><td><span class="flag">&#127482;&#127480;</span> US</td><td>NIST AI RMF 1.0</td><td>MEASURE function for AI risk</td><td><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">nist.gov</a></td></tr>
+        <tr><td><span class="flag">&#127475;&#127462;</span> NZ</td><td>RBNZ BS2A</td><td>Model validation independence, monitoring</td><td><a href="https://www.rbnz.govt.nz/regulation-and-supervision" target="_blank" rel="noopener">rbnz.govt.nz</a></td></tr>
+        <tr><td><span class="flag">&#127480;&#127468;</span> SG</td><td>MAS AI MRM Guidelines</td><td>AI model risk management for FIs</td><td><a href="https://www.mas.gov.sg" target="_blank" rel="noopener">mas.gov.sg</a></td></tr>
+        <tr><td><span class="flag">&#127462;&#127482;</span> AU</td><td>APRA CPS 220</td><td>Risk management, model oversight</td><td><a href="https://www.apra.gov.au" target="_blank" rel="noopener">apra.gov.au</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout c-warn">mrv-lib provides a quantitative diagnostic that makes the judgements in these standards more defensible and auditable. It does not certify that a model meets any requirement, replace a qualified validator, or provide a legal opinion.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+    <div class="eyebrow">Roadmap</div>
+    <h2 class="head-h">From invariance tests to a governance layer.</h2>
+    <p class="lead">Released capability tracks published research; what comes next is a direction, not a promise. Current release v0.6.1.</p>
+    </div>
+
+    <div class="rm">
+      <div class="rm-row"><div class="rm-v">now</div><div><h3>Invariance validators <span class="pill p-green"><span class="pdot" style="background:var(--green)"></span>Released</span></h3><p>Representation (validate_rep) and resolution (validate_res) tests. Papers 1 and 2.</p></div></div>
+      <div class="rm-row"><div class="rm-v">next</div><div><h3>Fail-safe governance <span class="pill p-grey">Direction</span></h3><p>Turn the two-layer invariance verdict into a gate that flags or suspends a model before an unstable regime label drives a live decision.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div style="max-width:30ch">
+        <div class="fb">mrv<span>-lib</span></div>
+        <p style="margin-top:10px;font-size:.9rem">The open-source specification-stability validator for financial models.</p>
+      </div>
+      <div><h5>Library</h5><ul>
+        <li><a href="https://github.com/modelguard-lab/mrv-lib" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://pypi.org/project/mrv-lib/" target="_blank" rel="noopener">PyPI</a></li>
+        <li><a href="https://github.com/modelguard-lab/mrv-lib/blob/main/examples/quickstart.ipynb" target="_blank" rel="noopener">Notebook</a></li>
+      </ul></div>
+      <div><h5>Sections</h5><ul>
+        <li><a href="#methodology">Methodology</a></li>
+        <li><a href="#examples">Examples</a></li>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="#regulations">Regulations</a></li>
+      </ul></div>
+    </div>
+    <div class="legal">
+      <span>Based on PhD research by Kai Zheng &middot; ModelGuard Lab</span>
+      <span>AGPL-3.0-or-later</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
