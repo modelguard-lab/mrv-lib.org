@@ -1,0 +1,581 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="mrv.utils – Configuration and logging" href="api/mrv.utils.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Changelog - mrv-lib</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">mrv-lib</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">mrv-lib</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/paper1_rep_invariance.html">Tutorial: Paper 1 – Representation Invariance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/paper2_res_invariance.html">Tutorial: Paper 2 – Resolution Invariance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.html">mrv (top-level)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.invariance.html">mrv.invariance – High-level invariance API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.validator.html">mrv.validator – Regime diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.pipeline.html">mrv.pipeline – Labels-first validation pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.models.html">mrv.models – Regime model fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mrv.utils.html">mrv.utils – Configuration and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/modelguard-lab/mrv-lib/blob/main/docs/changelog.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/modelguard-lab/mrv-lib/edit/main/docs/changelog.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<section id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h2>
+<p>All notable changes to mrv-lib are documented here.
+The project follows <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>
+and <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.</p>
+<section id="unreleased">
+<h3>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h3>
+<p>(no changes yet)</p>
+</section>
+<section id="id1">
+<h3>[0.6.1] - 2026-07-06<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Patch release: report packaging, resolution-path wiring, lint, and docs.</p>
+<section id="fixed">
+<h4>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Report template now ships in the wheel.</strong> The LaTeX template moved from the
+repo-root <code class="docutils literal notranslate"><span class="pre">templates/</span></code> directory into the package at
+<code class="docutils literal notranslate"><span class="pre">src/mrv/templates/template.tex</span></code> and is declared in
+<code class="docutils literal notranslate"><span class="pre">[tool.setuptools.package-data]</span></code>. <code class="docutils literal notranslate"><span class="pre">report()</span></code> / <code class="docutils literal notranslate"><span class="pre">generate_report()</span></code> resolve it
+via <code class="docutils literal notranslate"><span class="pre">importlib.resources</span></code>, so it works for pip-installed users (previously the
+template was not packaged and report generation failed).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">report()</span></code> now renders resolution (Paper 2) result JSON.</strong> <code class="docutils literal notranslate"><span class="pre">_render</span></code> /
+<code class="docutils literal notranslate"><span class="pre">_expand_assets</span></code> branch on <code class="docutils literal notranslate"><span class="pre">data[&quot;test&quot;]</span></code>; the resolution case is rendered from
+<code class="docutils literal notranslate"><span class="pre">overall_mean_ari</span></code> with the Spearman / factor-set sections omitted. Previously
+a resolution <code class="docutils literal notranslate"><span class="pre">result.json</span></code> raised <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RepValidator._build_json</span></code>: an exact overall ARI / Spearman of <code class="docutils literal notranslate"><span class="pre">0.0</span></code> now
+serialises as <code class="docutils literal notranslate"><span class="pre">0.0</span></code> instead of <code class="docutils literal notranslate"><span class="pre">null</span></code> (truthiness check replaced with an
+explicit <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RepInvarianceResult.summary()</span></code> now reports the mean of the finite per-pair
+Spearman values (falling back to <code class="docutils literal notranslate"><span class="pre">n/a</span></code> only when none are finite) instead of a
+hardcoded <code class="docutils literal notranslate"><span class="pre">n/a</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mrv.data.download_yahoo.download</span></code> skips a symbol/frequency when a required
+OHLC column is missing (instead of raising <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>) and includes <code class="docutils literal notranslate"><span class="pre">Volume</span></code>
+in the saved CSV when present.</p></li>
+</ul>
+</section>
+<section id="removed">
+<h4>Removed<a class="headerlink" href="#removed" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Retired the SR 26-2 / SR 11-7 governance-report symbols.</strong> <code class="docutils literal notranslate"><span class="pre">sr26_2_report</span></code>,
+<code class="docutils literal notranslate"><span class="pre">generate_sr26_2_report</span></code>, and the deprecated <code class="docutils literal notranslate"><span class="pre">sr11_7_report</span></code> /
+<code class="docutils literal notranslate"><span class="pre">generate_sr11_7_report</span></code> aliases have been removed; they referenced a template
+that no longer ships. Use the generic <code class="docutils literal notranslate"><span class="pre">report()</span></code> / <code class="docutils literal notranslate"><span class="pre">generate_report()</span></code>.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">res</span></code> subcommand from the CLI. Resolution invariance is
+labels-first: fit your own regime models at each frequency and call
+<code class="docutils literal notranslate"><span class="pre">validate_res()</span></code> from the Python API. The CLI no longer exposes an
+unimplemented convenience path.</p></li>
+</ul>
+</section>
+<section id="changed">
+<h4>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> now single-sources <code class="docutils literal notranslate"><span class="pre">version</span></code> / <code class="docutils literal notranslate"><span class="pre">release</span></code> from
+<code class="docutils literal notranslate"><span class="pre">mrv.__version__</span></code>.</p></li>
+<li><p>Zeroed all <code class="docutils literal notranslate"><span class="pre">ruff</span></code> (E/F/W/B/I) lint errors across <code class="docutils literal notranslate"><span class="pre">src/</span></code> and <code class="docutils literal notranslate"><span class="pre">tests/</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h3>[0.6.0] - 2026-06-22<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>Minor release consolidating the representation-invariance (Paper 1) and
+resolution-invariance (Paper 2) validators behind a stable public API.</p>
+<section id="added">
+<h4>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mrv.invariance.rep_invariance_validator(model_fn,</span> <span class="pre">admissible_class,</span> <span class="pre">returns,</span> <span class="pre">K)</span></code>:
+functional Paper 1 representation-invariance check returning a typed
+<code class="docutils literal notranslate"><span class="pre">RepInvarianceResult</span></code> (per-pair ARI, per-pair Spearman ordering, <code class="docutils literal notranslate"><span class="pre">1/K</span></code> null,
+partition and ordering pass flags).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mrv.invariance.res_invariance_validator(model_fn,</span> <span class="pre">resolution_set,</span> <span class="pre">...)</span></code>:
+functional Paper 2 resolution-invariance check returning a typed
+<code class="docutils literal notranslate"><span class="pre">ResInvarianceResult</span></code> (cross-frequency ARI matrix, AMI matrix,
+within-intraday excess, permutation p-value and null CI).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ResolutionSpec</span></code> dataclass with the Paper 2 four-frequency panel
+(<code class="docutils literal notranslate"><span class="pre">5m</span></code>, <code class="docutils literal notranslate"><span class="pre">15m</span></code>, <code class="docutils literal notranslate"><span class="pre">1h</span></code>, <code class="docutils literal notranslate"><span class="pre">1d</span></code>) and intraday subset (<code class="docutils literal notranslate"><span class="pre">5m</span></code>, <code class="docutils literal notranslate"><span class="pre">15m</span></code>, <code class="docutils literal notranslate"><span class="pre">1h</span></code>);
+constants <code class="docutils literal notranslate"><span class="pre">PAPER2_FREQS</span></code> and <code class="docutils literal notranslate"><span class="pre">PAPER2_INTRADAY_FREQS</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PUBLIC_API.md</span></code>: semantic-versioning contract and full public-symbol listing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__all__</span></code> declarations across the public modules; Google-style docstrings and
+type hints on the public surface.</p></li>
+<li><p>Example notebook section demonstrating <code class="docutils literal notranslate"><span class="pre">rep_invariance_validator</span></code> alongside the
+labels-first <code class="docutils literal notranslate"><span class="pre">RepValidator</span></code> API.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h4>Fixed<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">src/mrv/__init__.py</span></code>: <code class="docutils literal notranslate"><span class="pre">__version__</span></code> set to <code class="docutils literal notranslate"><span class="pre">&quot;0.6.0&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test_version.py</span></code>: version assertion updated to <code class="docutils literal notranslate"><span class="pre">&quot;0.6.0&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code>: <code class="docutils literal notranslate"><span class="pre">version</span></code> set to <code class="docutils literal notranslate"><span class="pre">&quot;0.6.0&quot;</span></code>; Paper 1 and Paper 2 statuses updated.</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h3>[0.5.1] - 2026-06-01<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>Patch release. Backward-compatible additions and stricter input validation.</p>
+<section id="id5">
+<h4>Fixed<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Rolling-window index off-by-one corrected; window-boundary values shift by one
+observation step. Callers replaying historical series should re-run.</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3>[0.5.0] - 2026-05-25<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<section id="id7">
+<h4>Changed<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>SR 11-7 references migrated to SR 26-2 / OCC Bulletin 2026-13 throughout the
+codebase, templates, examples, and documentation. SR 26-2 (Federal Reserve
+letter) and OCC Bulletin 2026-13, jointly issued 2026-04-17 by the OCC, Federal
+Reserve, and FDIC, supersede SR 11-7 (Federal Reserve, 2011) as the primary US
+model risk management guidance. See
+<a class="reference external" href="https://www.occ.treas.gov/news-issuances/bulletins/2026/bulletin-2026-13.html">OCC Bulletin 2026-13</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sr11_7_report</span></code> (in <code class="docutils literal notranslate"><span class="pre">mrv.pipeline</span></code>) aliased to the new <code class="docutils literal notranslate"><span class="pre">sr26_2_report</span></code> with a
+<code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> when called.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generate_sr11_7_report</span></code> (in <code class="docutils literal notranslate"><span class="pre">mrv.validator.report</span></code>) aliased to the new
+<code class="docutils literal notranslate"><span class="pre">generate_sr26_2_report</span></code> with a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> when called.</p></li>
+<li><p>Version bumped to 0.5.0.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4>Added<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mrv.pipeline.sr26_2_report</span></code>: canonical replacement for <code class="docutils literal notranslate"><span class="pre">sr11_7_report</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mrv.validator.report.generate_sr26_2_report</span></code>: canonical replacement for
+<code class="docutils literal notranslate"><span class="pre">generate_sr11_7_report</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h3>[0.4.2] - 2026-05-17<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<section id="id10">
+<h4>Changed<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Relicensed from MIT to AGPL-3.0-or-later with a commercial exception.</strong> The
+open-source license is now GNU AGPL-3.0 (full text in <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code>): free for
+academic, teaching, and personal use, with AGPL copyleft and network-source
+obligations. Organizations needing proprietary or closed-source use that cannot
+meet the AGPL must obtain a separate commercial license; see
+<code class="docutils literal notranslate"><span class="pre">COMMERCIAL-LICENSE.md</span></code>. <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code>, and <code class="docutils literal notranslate"><span class="pre">README.md</span></code>
+updated accordingly.</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h3>[0.2.1] - 2026-03-30<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<section id="id12">
+<h4>Fixed<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>CI lint errors (unused imports, lambda assignment).</p></li>
+<li><p>GitHub Actions upgraded to Node.js 22 (checkout v5, setup-python v6).</p></li>
+</ul>
+</section>
+</section>
+<section id="id13">
+<h3>[0.2.0] - 2026-03-30<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<section id="id14">
+<h4>Added<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Resolution Invariance validator (res)</strong>: multi-frequency regime analysis
+(5m/15m/1h/1d), cross-frequency ARI/AMI/VI matrices, permutation p-values,
+event/calm window analysis, time-of-day seasonality, calendar-window
+robustness, robustness sweeps (K, window scale), and timeline / rolling-ARI
+visualizations, with an HMM dual-model comparison.</p></li>
+<li><p><strong>Business impact function (<code class="docutils literal notranslate"><span class="pre">impact_fn</span></code>)</strong>: user-defined callback
+<code class="docutils literal notranslate"><span class="pre">(labels,</span> <span class="pre">prices)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code> on both <code class="docutils literal notranslate"><span class="pre">RepValidator</span></code> and <code class="docutils literal notranslate"><span class="pre">ResValidator</span></code>;
+computes a pairwise impact-delta matrix across representations/frequencies.</p></li>
+<li><p><strong>Disagreement attribution</strong>: leave-one-out factor attribution (rep),
+frequency-pair decomposition (res), and temporal hotspot detection with a
+per-day ARI timeline.</p></li>
+<li><p><strong>Continuous monitoring</strong>: <code class="docutils literal notranslate"><span class="pre">monitor()</span></code> with <code class="docutils literal notranslate"><span class="pre">init</span></code>/<code class="docutils literal notranslate"><span class="pre">incremental</span></code> modes,
+persistent <code class="docutils literal notranslate"><span class="pre">monitoring_history.csv</span></code>, configurable alert thresholds, file-based
+alerts, and webhook support.</p></li>
+<li><p><strong>Model validation report</strong>: LaTeX template with auto-generated findings and
+severity classification (Critical/High/Medium/Low/Informational),
+user-fillable YAML overrides, executive summary with risk rating, and an
+effective-challenge evidence section.</p></li>
+<li><p><strong>Findings engine</strong>: <code class="docutils literal notranslate"><span class="pre">findings.py</span></code> with a <code class="docutils literal notranslate"><span class="pre">Finding</span></code> dataclass,
+<code class="docutils literal notranslate"><span class="pre">classify_severity()</span></code>, <code class="docutils literal notranslate"><span class="pre">generate_findings()</span></code>, <code class="docutils literal notranslate"><span class="pre">overall_risk_rating()</span></code>, and
+YAML override merging.</p></li>
+</ul>
+</section>
+</section>
+<section id="first-public-release">
+<h3>[0.1.0] - 2026-03-22 – First public release<a class="headerlink" href="#first-public-release" title="Link to this heading">¶</a></h3>
+<section id="id15">
+<h4>Added<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Data infrastructure</strong>: IB download for all frequencies (5m/15m/1h/1d),
+incremental updates, OHLCV validation and resampling.</p></li>
+<li><p><strong>Factor engine</strong>: seven built-in risk factors (volatility, drawdown, max
+drawdown, VaR, CVaR, realized skew, stability) with a user-extensible registry.</p></li>
+<li><p><strong>Model registry</strong>: GMM and HMM built in, user-extensible via
+<code class="docutils literal notranslate"><span class="pre">register_model()</span></code>.</p></li>
+<li><p><strong>Normalization</strong>: rolling z-score and min-max.</p></li>
+<li><p><strong>Representation Invariance validator (rep)</strong>: pairwise ARI across multiple
+factor sets, per-asset heatmaps, JSON output.</p></li>
+<li><p><strong>Pipeline</strong>: standard load -&gt; factors -&gt; fit -&gt; validate -&gt; report flow, each
+step replaceable.</p></li>
+<li><p><strong>Two-layer verdict</strong>: partition stability (ARI &gt;= 0.65) and ordering
+stability (Spearman &gt;= 0.85).</p></li>
+<li><p><strong>Report generation</strong>: JSON -&gt; LaTeX -&gt; PDF pipeline with template
+conditionals, dashboard, heatmaps, and remediation plan.</p></li>
+<li><p><strong>CLI</strong>: <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">download</span></code>, <code class="docutils literal notranslate"><span class="pre">report</span></code> subcommands.</p></li>
+<li><p><strong>Configuration</strong>: single <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> with download, logging, factors,
+normalization, and validator sections.</p></li>
+<li><p><strong>Logging</strong>: console plus optional timestamped file logging.</p></li>
+<li><p><strong>Security</strong>: IB host/port validation, non-positive price detection.</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="api/mrv.utils.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">mrv.utils – Configuration and logging</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Kai Zheng
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fa-brands fa-github fa-2x" href="https://github.com/modelguard-lab/mrv-lib" aria-label="GitHub"></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#changelog">Changelog</a><ul>
+<li><a class="reference internal" href="#unreleased">[Unreleased]</a></li>
+<li><a class="reference internal" href="#id1">[0.6.1] - 2026-07-06</a><ul>
+<li><a class="reference internal" href="#fixed">Fixed</a></li>
+<li><a class="reference internal" href="#removed">Removed</a></li>
+<li><a class="reference internal" href="#changed">Changed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">[0.6.0] - 2026-06-22</a><ul>
+<li><a class="reference internal" href="#added">Added</a></li>
+<li><a class="reference internal" href="#id3">Fixed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">[0.5.1] - 2026-06-01</a><ul>
+<li><a class="reference internal" href="#id5">Fixed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">[0.5.0] - 2026-05-25</a><ul>
+<li><a class="reference internal" href="#id7">Changed</a></li>
+<li><a class="reference internal" href="#id8">Added</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">[0.4.2] - 2026-05-17</a><ul>
+<li><a class="reference internal" href="#id10">Changed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11">[0.2.1] - 2026-03-30</a><ul>
+<li><a class="reference internal" href="#id12">Fixed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13">[0.2.0] - 2026-03-30</a><ul>
+<li><a class="reference internal" href="#id14">Added</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#first-public-release">[0.1.0] - 2026-03-22 – First public release</a><ul>
+<li><a class="reference internal" href="#id15">Added</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=74e82e83"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

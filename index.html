@@ -244,7 +244,7 @@ footer .legal{border-top:1px solid var(--navy-line);margin-top:44px;padding-top:
       <li><a href="#top">Overview</a></li>
       <li><a href="#methodology">Methodology</a></li>
       <li><a href="#examples">Examples</a></li>
-      <li><a href="#docs">Docs</a></li>
+      <li><a href="docs/index.html">Docs</a></li>
       <li><a href="#regulations">Regulations</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
     </ul>
@@ -365,56 +365,6 @@ report(verdict["json_path"], cfg=cfg)</pre>
   </div>
 </section>
 
-<!-- DOCS -->
-<section class="section" id="docs">
-  <div class="wrap">
-    <div class="section-head">
-    <div class="eyebrow">Docs</div>
-    <h2 class="head-h">Reference.</h2>
-    <p class="lead">Install, configure, and call the two published validators: representation and resolution invariance, from Papers 1 and 2.</p>
-    </div>
-
-    <div class="grid g2">
-      <div>
-        <div class="codehead">config.yaml</div>
-        <pre class="code">download:
-  source: yfinance
-  symbols: [SPY]
-  frequencies: [5m, 1h, 1d]
-
-validator:
-  model: gmm            <span class="k"># gmm | hmm</span>
-  factor_sets:
-    - [vol, max_drawdown, VaR, CVaR]
-    - [vol, realized_skew, VaR, CVaR]
-
-thresholds:
-  ari: 0.65
-  spearman: 0.85</pre>
-      </div>
-      <div>
-        <div class="codehead">Python API</div>
-        <pre class="code">validate_rep(
-  labels,          <span class="k"># {factor_set: label_array}</span>
-  risk_proxy=None,
-  prices=None,
-  cfg=None,
-) -&gt; dict
-
-validate_res(
-  labels,          <span class="k"># {frequency: label_array}</span>
-  event_window=None,
-  calm_window=None,
-  cfg=None,
-) -&gt; dict
-<span class="k"># -> {verdict, ari, spearman, matrix_path, json_path}</span></pre>
-      </div>
-    </div>
-
-    <p class="note">Requires Python 3.9+. Two validators, one per published paper.</p>
-  </div>
-</section>
-
 <!-- REGULATIONS -->
 <section class="section alt" id="regulations">
   <div class="wrap">
@@ -475,7 +425,7 @@ validate_res(
       <div><h5>Sections</h5><ul>
         <li><a href="#methodology">Methodology</a></li>
         <li><a href="#examples">Examples</a></li>
-        <li><a href="#docs">Docs</a></li>
+        <li><a href="docs/index.html">Docs</a></li>
         <li><a href="#regulations">Regulations</a></li>
       </ul></div>
     </div>
