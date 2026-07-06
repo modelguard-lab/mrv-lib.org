@@ -7,3 +7,10 @@ node_modules
 # PDFs
 *.pdf
 *.PDF
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
